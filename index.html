@@ -1,0 +1,1772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title> College</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #060910;
+    --bg2: #0d1220;
+    --bg3: #131929;
+    --bg4: #1a2236;
+    --border: #1f2d45;
+    --border2: #2a3d5e;
+    --text: #e8eeff;
+    --text2: #8b9bbf;
+    --text3: #4a5a7a;
+    --accent: #4f8ef7;
+    --accent2: #7eb3ff;
+    --accent-glow: rgba(79,142,247,0.18);
+    --green: #34d399;
+    --amber: #fbbf24;
+    --coral: #f87171;
+    --tag-bg: #1a2d4a;
+    --tag-text: #7eb3ff;
+    --radius: 12px;
+    --radius-lg: 18px;
+    --font-head: 'Syne', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+
+  /* ── LAYOUT ── */
+  .page-wrap { display: flex; min-height: 100vh; }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    width: 260px;
+    flex-shrink: 0;
+    background: var(--bg2);
+    border-right: 1px solid var(--border);
+    padding: 28px 0;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sidebar-logo {
+    padding: 0 22px 24px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 16px;
+  }
+  .sidebar-logo .logo-title {
+    font-family: var(--font-head);
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--text);
+    letter-spacing: -0.5px;
+  }
+  .sidebar-logo .logo-sub {
+    font-size: 11px;
+    color: var(--text3);
+    margin-top: 2px;
+    font-weight: 400;
+  }
+
+  .nav-section-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--text3);
+    padding: 10px 22px 4px;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 22px;
+    font-size: 13px;
+    color: var(--text2);
+    text-decoration: none;
+    border-left: 2px solid transparent;
+    transition: all 0.15s;
+    font-weight: 400;
+  }
+  .nav-item:hover, .nav-item.active {
+    color: var(--accent2);
+    background: var(--accent-glow);
+    border-left-color: var(--accent);
+  }
+  .nav-item .nav-icon { font-size: 14px; width: 18px; flex-shrink: 0; }
+  .nav-item .nav-badge {
+    margin-left: auto;
+    font-size: 9px;
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    padding: 1px 6px;
+    border-radius: 99px;
+    font-family: var(--font-mono);
+  }
+
+  /* ── MAIN CONTENT ── */
+  .main {
+    flex: 1;
+    min-width: 0;
+    padding: 0 48px 80px;
+    max-width: 900px;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    padding: 56px 0 48px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 48px;
+    position: relative;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -48px; right: -48px; bottom: 0;
+    background: radial-gradient(ellipse 60% 50% at 30% 50%, rgba(79,142,247,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.8px;
+    color: var(--accent);
+    background: var(--accent-glow);
+    border: 1px solid rgba(79,142,247,0.25);
+    padding: 4px 12px;
+    border-radius: 99px;
+    margin-bottom: 20px;
+  }
+  .hero-title {
+    font-family: var(--font-head);
+    font-size: 52px;
+    font-weight: 800;
+    letter-spacing: -2px;
+    line-height: 1.05;
+    margin-bottom: 16px;
+    color: var(--text);
+  }
+  .hero-title span { color: var(--accent); }
+  .hero-desc {
+    font-size: 16px;
+    color: var(--text2);
+    max-width: 600px;
+    line-height: 1.75;
+    font-weight: 300;
+    margin-bottom: 28px;
+  }
+  .hero-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .hero-tag {
+    font-size: 12px;
+    font-family: var(--font-mono);
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    color: var(--text2);
+    padding: 4px 12px;
+    border-radius: 6px;
+  }
+
+  /* ── SECTIONS ── */
+  section { margin-bottom: 56px; scroll-margin-top: 32px; }
+
+  .section-eyebrow {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .section-title {
+    font-family: var(--font-head);
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.8px;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+  .section-subtitle {
+    color: var(--text2);
+    font-size: 14px;
+    margin-bottom: 28px;
+    font-weight: 300;
+  }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    margin-bottom: 16px;
+  }
+  .card-title {
+    font-family: var(--font-head);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card p { color: var(--text2); font-size: 14px; line-height: 1.7; }
+
+  /* ── FILE CARDS ── */
+  .file-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  .file-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 20px;
+    background: var(--bg3);
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    user-select: none;
+  }
+  .file-card-header:hover { background: var(--bg4); }
+  .file-card-name {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .file-card-name .file-icon { font-size: 16px; }
+  .file-card-name .file-path {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--accent2);
+    font-weight: 500;
+  }
+  .file-card-name .file-desc {
+    font-size: 12px;
+    color: var(--text3);
+    margin-left: 4px;
+  }
+  .file-card-meta { display: flex; align-items: center; gap: 8px; }
+  .file-badge {
+    font-size: 10px;
+    font-family: var(--font-mono);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 500;
+  }
+  .badge-js { background: rgba(251,191,36,0.15); color: #fbbf24; border: 1px solid rgba(251,191,36,0.25); }
+  .badge-json { background: rgba(52,211,153,0.12); color: #34d399; border: 1px solid rgba(52,211,153,0.2); }
+  .badge-md { background: rgba(167,139,250,0.12); color: #a78bfa; border: 1px solid rgba(167,139,250,0.2); }
+  .badge-config { background: rgba(248,113,113,0.12); color: #f87171; border: 1px solid rgba(248,113,113,0.2); }
+  .toggle-icon { color: var(--text3); font-size: 12px; transition: transform 0.2s; }
+  .file-card.open .toggle-icon { transform: rotate(180deg); }
+  .file-card-body { display: none; }
+  .file-card.open .file-card-body { display: block; }
+
+  /* ── EXPLANATION BOX ── */
+  .explain-box {
+    padding: 16px 20px;
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+  }
+  .explain-box h4 {
+    font-family: var(--font-head);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+  .explain-box p { font-size: 13px; color: var(--text2); line-height: 1.65; margin-bottom: 8px; }
+  .explain-box p:last-child { margin-bottom: 0; }
+
+  .key-points {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 10px;
+  }
+  .key-point {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text2);
+  }
+  .key-point .dot {
+    width: 5px;
+    height: 5px;
+    background: var(--accent);
+    border-radius: 50%;
+    margin-top: 7px;
+    flex-shrink: 0;
+  }
+
+  /* ── CODE BLOCK ── */
+  .code-wrap { position: relative; }
+  .code-lang {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    font-size: 10px;
+    font-family: var(--font-mono);
+    color: var(--text3);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  pre {
+    background: #050810;
+    padding: 20px;
+    overflow-x: auto;
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    line-height: 1.75;
+    color: #c9d8ff;
+    border: none;
+  }
+  pre code { font-family: inherit; }
+
+  /* Syntax colors */
+  .kw { color: #7eb3ff; }      /* keywords: import, export, const, etc */
+  .fn { color: #82e4c4; }      /* function names */
+  .str { color: #ffb86c; }     /* strings */
+  .cmt { color: #3d5070; font-style: italic; } /* comments */
+  .num { color: #ff9d85; }     /* numbers */
+  .cls { color: #c4a8ff; }     /* class names / components */
+  .prop { color: #9ecfff; }    /* properties */
+  .punc { color: #5a7a9f; }    /* punctuation */
+  .tag-c { color: #f97583; }   /* JSX tags */
+  .attr { color: #b3d9ff; }    /* JSX attributes */
+
+  /* ── STRUCTURE TREE ── */
+  .tree {
+    background: #050810;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 2;
+    color: var(--text2);
+  }
+  .tree .folder { color: var(--accent2); font-weight: 500; }
+  .tree .js-file { color: #fbbf24; }
+  .tree .json-file { color: #34d399; }
+  .tree .md-file { color: #a78bfa; }
+  .tree .config-file { color: #f87171; }
+  .tree .comment { color: var(--text3); font-style: italic; }
+  .tree-line { display: flex; align-items: center; }
+  .tree-indent { color: var(--border2); }
+
+  /* ── GRID ── */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+
+  /* ── STAT CARDS ── */
+  .stat-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px;
+    text-align: center;
+  }
+  .stat-card .stat-num {
+    font-family: var(--font-head);
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--accent);
+    display: block;
+  }
+  .stat-card .stat-lbl {
+    font-size: 12px;
+    color: var(--text3);
+    margin-top: 4px;
+    font-weight: 500;
+  }
+
+  /* ── FLOW DIAGRAM ── */
+  .flow {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    overflow-x: auto;
+    padding: 24px 0;
+    margin-bottom: 8px;
+  }
+  .flow-item {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 12px 16px;
+    text-align: center;
+    flex-shrink: 0;
+    min-width: 110px;
+  }
+  .flow-item .fi-icon { font-size: 20px; margin-bottom: 4px; }
+  .flow-item .fi-label { font-size: 11px; font-weight: 600; color: var(--text); }
+  .flow-item .fi-sub { font-size: 10px; color: var(--text3); margin-top: 2px; }
+  .flow-arrow { color: var(--border2); font-size: 18px; padding: 0 6px; flex-shrink: 0; }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight-box {
+    border-left: 3px solid var(--accent);
+    background: var(--accent-glow);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 14px 18px;
+    margin: 14px 0;
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.65;
+  }
+  .highlight-box.green { border-color: var(--green); background: rgba(52,211,153,0.07); }
+  .highlight-box.amber { border-color: var(--amber); background: rgba(251,191,36,0.07); }
+  .highlight-box strong { color: var(--text); font-weight: 600; }
+
+  /* ── TABLE ── */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 16px; }
+  th {
+    background: var(--bg3);
+    color: var(--text2);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text2);
+    vertical-align: top;
+  }
+  td:first-child { font-family: var(--font-mono); font-size: 12px; color: var(--accent2); }
+  tr:last-child td { border-bottom: none; }
+  .tbl-wrap { background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 20px; }
+
+  /* ── STEP CARDS ── */
+  .steps { display: flex; flex-direction: column; gap: 0; }
+  .step {
+    display: flex;
+    gap: 16px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .step:last-child { border-bottom: none; }
+  .step-num {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--accent-glow);
+    border: 1px solid rgba(79,142,247,0.3);
+    color: var(--accent);
+    font-family: var(--font-head);
+    font-size: 14px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .step-content h4 {
+    font-family: var(--font-head);
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+  .step-content p { font-size: 13px; color: var(--text2); line-height: 1.65; }
+
+  /* ── COMPONENT GRID ── */
+  .comp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin-bottom: 20px; }
+  .comp-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    transition: border-color 0.15s;
+  }
+  .comp-card:hover { border-color: var(--border2); }
+  .comp-card .cc-icon { font-size: 24px; margin-bottom: 8px; }
+  .comp-card .cc-name {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--accent2);
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+  .comp-card .cc-desc { font-size: 12px; color: var(--text3); line-height: 1.5; }
+
+  /* ── PHONE MOCKUP ── */
+  .phone-showcase {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    padding: 32px;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    margin-bottom: 28px;
+    overflow-x: auto;
+  }
+  .phone-frame {
+    width: 200px;
+    background: #0A0E1A;
+    border-radius: 28px;
+    border: 5px solid #1C2539;
+    overflow: hidden;
+    flex-shrink: 0;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.5);
+  }
+  .phone-notch {
+    height: 22px;
+    background: #0A0E1A;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .phone-notch-bar {
+    width: 60px; height: 8px;
+    background: #1C2539;
+    border-radius: 6px;
+  }
+  .phone-screen { padding: 0 10px 14px; }
+  .ps-header { display: flex; justify-content: space-between; align-items: center; padding: 8px 0 7px; }
+  .ps-title { color: #F0F4FF; font-family: var(--font-head); font-size: 16px; font-weight: 800; }
+  .ps-sub { color: #8B96B5; font-size: 7px; }
+  .ps-globe { width: 28px; height: 28px; background: rgba(79,142,247,0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; border: 1px solid #252E45; }
+  .ps-stats { display: flex; background: #131929; border: 1px solid #252E45; border-radius: 8px; padding: 7px 0; margin-bottom: 7px; }
+  .ps-stat { flex: 1; text-align: center; }
+  .ps-stat-n { color: #4F8EF7; font-size: 10px; font-weight: 700; }
+  .ps-stat-l { color: #4A5578; font-size: 7px; margin-top: 1px; }
+  .ps-stat-d { width: 1px; background: #252E45; }
+  .ps-search { display: flex; align-items: center; gap: 5px; background: #1C2539; border: 1px solid #252E45; border-radius: 8px; padding: 5px 8px; margin-bottom: 6px; }
+  .ps-search-txt { color: #4A5578; font-size: 8px; }
+  .ps-card { background: #131929; border: 1px solid #252E45; border-radius: 9px; margin-bottom: 6px; display: flex; overflow: hidden; }
+  .ps-acc { width: 3px; }
+  .ps-card-b { flex: 1; padding: 8px; }
+  .ps-card-h { display: flex; gap: 6px; align-items: center; margin-bottom: 4px; }
+  .ps-emoji-box { width: 24px; height: 24px; background: #1C2539; border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: 12px; border: 1px solid #252E45; }
+  .ps-uni-name { color: #F0F4FF; font-size: 8.5px; font-weight: 700; line-height: 1.3; }
+  .ps-loc { color: #8B96B5; font-size: 7px; margin-top: 1px; }
+  .ps-desc { color: #8B96B5; font-size: 7px; line-height: 1.4; margin-bottom: 5px; }
+  .ps-footer { display: flex; justify-content: space-between; align-items: center; }
+  .ps-tag { background: #1E2D4A; border-radius: 99px; padding: 2px 5px; }
+  .ps-tag-t { color: #7EB3FF; font-size: 6px; font-weight: 600; }
+  .ps-arrow { width: 14px; height: 14px; background: rgba(79,142,247,0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #4F8EF7; font-size: 8px; }
+
+  /* Detail phone */
+  .pd-back { display: flex; align-items: center; gap: 3px; padding: 7px 0 6px; border-bottom: 1px solid #252E45; margin-bottom: 9px; }
+  .pd-back-a { color: #4F8EF7; font-size: 11px; font-weight: 700; }
+  .pd-back-t { color: #4F8EF7; font-size: 8px; font-weight: 600; }
+  .pd-hero { text-align: center; padding-bottom: 9px; }
+  .pd-badge { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; margin: 0 auto 6px; border: 1.5px solid rgba(0,61,124,0.5); background: rgba(0,61,124,0.15); }
+  .pd-name { color: #F0F4FF; font-size: 10px; font-weight: 800; margin-bottom: 4px; line-height: 1.3; }
+  .pd-loc-pill { display: inline-flex; align-items: center; gap: 3px; background: #1C2539; border: 1px solid #252E45; border-radius: 99px; padding: 2px 8px; margin-bottom: 4px; }
+  .pd-loc-t { color: #8B96B5; font-size: 7px; }
+  .pd-rank { color: #7EB3FF; font-size: 6.5px; font-weight: 600; background: #1E2D4A; border: 1px solid #252E45; border-radius: 99px; padding: 2px 8px; display: inline-block; }
+  .pd-line { height: 2px; border-radius: 1px; margin-bottom: 9px; opacity: 0.6; }
+  .pd-sec-lbl { color: #4A5578; font-size: 7px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600; margin-bottom: 5px; }
+  .pd-about { color: #8B96B5; font-size: 7px; line-height: 1.55; margin-bottom: 9px; }
+  .pd-badge-grid { display: flex; gap: 4px; margin-bottom: 4px; }
+  .pd-stat { flex: 1; background: #1C2539; border: 1px solid #252E45; border-radius: 6px; padding: 5px 3px; text-align: center; }
+  .pd-stat-i { font-size: 11px; }
+  .pd-stat-v { color: #F0F4FF; font-size: 6.5px; font-weight: 700; margin-top: 2px; }
+  .pd-stat-l { color: #4A5578; font-size: 6px; margin-top: 1px; }
+  .pd-tags { display: flex; flex-wrap: wrap; gap: 3px; }
+  .pd-tag { background: #1E2D4A; border: 1px solid #252E45; border-radius: 99px; padding: 2px 6px; }
+  .pd-tag-t { color: #7EB3FF; font-size: 6.5px; }
+
+  /* phone label */
+  .phone-label {
+    text-align: center;
+    font-size: 11px;
+    color: var(--text3);
+    margin-top: 10px;
+    font-family: var(--font-mono);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 32px 0;
+    text-align: center;
+    color: var(--text3);
+    font-size: 12px;
+  }
+
+  /* ── COPY BUTTON ── */
+  .copy-btn {
+    position: absolute;
+    top: 10px;
+    right: 40px;
+    background: var(--bg4);
+    border: 1px solid var(--border);
+    color: var(--text3);
+    font-size: 10px;
+    font-family: var(--font-mono);
+    padding: 3px 9px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .copy-btn:hover { color: var(--text); border-color: var(--border2); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .sidebar { display: none; }
+    .main { padding: 0 20px 60px; }
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    .hero-title { font-size: 36px; }
+    .phone-showcase { flex-direction: column; align-items: center; }
+    .flow { flex-direction: column; align-items: flex-start; }
+    .flow-arrow { transform: rotate(90deg); }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-wrap">
+
+  <!-- SIDEBAR -->
+  <nav class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-title">🌍 UniExplorer</div>
+      <div class="logo-sub">React Native · Expo · Full Docs</div>
+    </div>
+
+    <div class="nav-section-label">Overview</div>
+    <a href="#intro" class="nav-item active"><span class="nav-icon">🏠</span> Introduction</a>
+    <a href="#structure" class="nav-item"><span class="nav-icon">🗂️</span> Project Structure</a>
+    <a href="#screens" class="nav-item"><span class="nav-icon">📱</span> App Screens</a>
+    <a href="#setup" class="nav-item"><span class="nav-icon">🚀</span> Setup & Run</a>
+
+    <div class="nav-section-label">Source Files</div>
+    <a href="#file-appjs" class="nav-item"><span class="nav-icon">⚡</span> App.js <span class="nav-badge">root</span></a>
+    <a href="#file-appjson" class="nav-item"><span class="nav-icon">⚙️</span> app.json</a>
+    <a href="#file-pkg" class="nav-item"><span class="nav-icon">📦</span> package.json</a>
+    <a href="#file-babel" class="nav-item"><span class="nav-icon">🔧</span> babel.config.js</a>
+
+    <div class="nav-section-label">Data & Theme</div>
+    <a href="#file-data" class="nav-item"><span class="nav-icon">🗃️</span> universities.js</a>
+    <a href="#file-theme" class="nav-item"><span class="nav-icon">🎨</span> theme/index.js</a>
+    <a href="#file-hook" class="nav-item"><span class="nav-icon">🔁</span> useResponsive.js</a>
+
+    <div class="nav-section-label">Navigation</div>
+    <a href="#file-nav" class="nav-item"><span class="nav-icon">🧭</span> AppNavigator.js</a>
+
+    <div class="nav-section-label">Screens</div>
+    <a href="#file-home" class="nav-item"><span class="nav-icon">📋</span> HomeScreen.js</a>
+    <a href="#file-details" class="nav-item"><span class="nav-icon">🔍</span> DetailsScreen.js</a>
+
+    <div class="nav-section-label">Components</div>
+    <a href="#file-card" class="nav-item"><span class="nav-icon">🃏</span> UniversityCard.js</a>
+    <a href="#file-badge" class="nav-item"><span class="nav-icon">🏷️</span> InfoBadge.js</a>
+    <a href="#file-tag" class="nav-item"><span class="nav-icon">💊</span> ProgramTag.js</a>
+    <a href="#file-search" class="nav-item"><span class="nav-icon">🔍</span> SearchBar.js</a>
+    <a href="#file-sec" class="nav-item"><span class="nav-icon">📌</span> SectionHeader.js</a>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- HERO -->
+    <div class="hero" id="intro">
+      <div class="hero-eyebrow">📱 React Native + Expo</div>
+      <h1 class="hero-title">UniExplorer<br /><span>Full Documentation</span></h1>
+      <p class="hero-desc">
+        A complete walkthrough of every file in the UniExplorer project — a production-ready React Native app for browsing world-class universities. Each file is explained with purpose, logic, and full source code.
+      </p>
+      <div class="hero-tags">
+        <span class="hero-tag">React Native 0.73</span>
+        <span class="hero-tag">Expo SDK 50</span>
+        <span class="hero-tag">React Navigation 6</span>
+        <span class="hero-tag">17 Files</span>
+        <span class="hero-tag">5 Components</span>
+        <span class="hero-tag">2 Screens</span>
+        <span class="hero-tag">8 Universities</span>
+      </div>
+    </div>
+
+    <!-- STATS -->
+    <div class="grid-3" style="margin-bottom:40px;">
+      <div class="stat-card"><span class="stat-num">17</span><div class="stat-lbl">Total Files</div></div>
+      <div class="stat-card"><span class="stat-num">5</span><div class="stat-lbl">Reusable Components</div></div>
+      <div class="stat-card"><span class="stat-num">8</span><div class="stat-lbl">Universities in Data</div></div>
+    </div>
+
+    <!-- PROJECT STRUCTURE -->
+    <section id="structure">
+      <div class="section-eyebrow">Architecture</div>
+      <h2 class="section-title">Project Structure</h2>
+      <p class="section-subtitle">Feature-based folder layout — each folder has one clear responsibility.</p>
+
+      <div class="tree">
+        <div class="tree-line"><span class="folder">UniExplorer/</span></div>
+        <div class="tree-line"><span class="tree-indent">├── </span><span class="js-file">App.js</span> <span class="comment">             ← entry point, root component</span></div>
+        <div class="tree-line"><span class="tree-indent">├── </span><span class="json-file">app.json</span> <span class="comment">           ← Expo configuration</span></div>
+        <div class="tree-line"><span class="tree-indent">├── </span><span class="json-file">package.json</span> <span class="comment">       ← dependencies</span></div>
+        <div class="tree-line"><span class="tree-indent">├── </span><span class="config-file">babel.config.js</span> <span class="comment">    ← transpiler settings</span></div>
+        <div class="tree-line"><span class="tree-indent">├── </span><span class="md-file">.gitignore</span></div>
+        <div class="tree-line"><span class="tree-indent">├── </span><span class="md-file">README.md</span></div>
+        <div class="tree-line"><span class="tree-indent">└── </span><span class="folder">src/</span></div>
+        <div class="tree-line"><span class="tree-indent">    ├── </span><span class="folder">data/</span></div>
+        <div class="tree-line"><span class="tree-indent">    │   └── </span><span class="js-file">universities.js</span> <span class="comment">  ← static JSON data</span></div>
+        <div class="tree-line"><span class="tree-indent">    ├── </span><span class="folder">theme/</span></div>
+        <div class="tree-line"><span class="tree-indent">    │   └── </span><span class="js-file">index.js</span> <span class="comment">         ← colors, spacing, typography</span></div>
+        <div class="tree-line"><span class="tree-indent">    ├── </span><span class="folder">hooks/</span></div>
+        <div class="tree-line"><span class="tree-indent">    │   └── </span><span class="js-file">useResponsive.js</span> <span class="comment"> ← responsive breakpoints</span></div>
+        <div class="tree-line"><span class="tree-indent">    ├── </span><span class="folder">navigation/</span></div>
+        <div class="tree-line"><span class="tree-indent">    │   └── </span><span class="js-file">AppNavigator.js</span> <span class="comment">  ← stack navigator</span></div>
+        <div class="tree-line"><span class="tree-indent">    ├── </span><span class="folder">screens/</span></div>
+        <div class="tree-line"><span class="tree-indent">    │   ├── </span><span class="js-file">HomeScreen.js</span> <span class="comment">    ← list + search</span></div>
+        <div class="tree-line"><span class="tree-indent">    │   └── </span><span class="js-file">DetailsScreen.js</span> <span class="comment"> ← full info view</span></div>
+        <div class="tree-line"><span class="tree-indent">    └── </span><span class="folder">components/</span></div>
+        <div class="tree-line"><span class="tree-indent">        ├── </span><span class="js-file">UniversityCard.js</span> <span class="comment"> ← card in list</span></div>
+        <div class="tree-line"><span class="tree-indent">        ├── </span><span class="js-file">InfoBadge.js</span> <span class="comment">      ← stat badge</span></div>
+        <div class="tree-line"><span class="tree-indent">        ├── </span><span class="js-file">ProgramTag.js</span> <span class="comment">     ← pill tag</span></div>
+        <div class="tree-line"><span class="tree-indent">        ├── </span><span class="js-file">SearchBar.js</span> <span class="comment">      ← search input</span></div>
+        <div class="tree-line"><span class="tree-indent">        └── </span><span class="js-file">SectionHeader.js</span> <span class="comment">  ← section title</span></div>
+      </div>
+    </section>
+
+    <!-- APP SCREENS -->
+    <section id="screens">
+      <div class="section-eyebrow">UI Preview</div>
+      <h2 class="section-title">App Screens</h2>
+      <p class="section-subtitle">Two screens connected via React Navigation stack.</p>
+
+      <div class="phone-showcase">
+        <!-- HOME SCREEN PHONE -->
+        <div>
+          <div class="phone-frame">
+            <div class="phone-notch"><div class="phone-notch-bar"></div></div>
+            <div class="phone-screen">
+              <div class="ps-header">
+                <div><div class="ps-title">UniExplorer</div><div class="ps-sub">Discover world-class universities</div></div>
+                <div class="ps-globe">🌍</div>
+              </div>
+              <div class="ps-stats">
+                <div class="ps-stat"><div class="ps-stat-n">8</div><div class="ps-stat-l">Universities</div></div>
+                <div class="ps-stat-d"></div>
+                <div class="ps-stat"><div class="ps-stat-n">8</div><div class="ps-stat-l">Countries</div></div>
+                <div class="ps-stat-d"></div>
+                <div class="ps-stat"><div class="ps-stat-n">Top 250</div><div class="ps-stat-l">All Ranked</div></div>
+              </div>
+              <div class="ps-search"><span style="font-size:10px;">🔍</span><span class="ps-search-txt">Search by name, country, city...</span></div>
+              <div class="ps-card">
+                <div class="ps-acc" style="background:#003D7C;"></div>
+                <div class="ps-card-b">
+                  <div class="ps-card-h"><div class="ps-emoji-box">🍁</div><div><div class="ps-uni-name">University of Toronto</div><div class="ps-loc">🇨🇦 Toronto, Canada</div></div></div>
+                  <div class="ps-desc">Top ranked university offering multiple international programs.</div>
+                  <div class="ps-footer"><div class="ps-tag"><span class="ps-tag-t">🏆 #1 in Canada</span></div><div class="ps-arrow">→</div></div>
+                </div>
+              </div>
+              <div class="ps-card">
+                <div class="ps-acc" style="background:#003F5C;"></div>
+                <div class="ps-card-b">
+                  <div class="ps-card-h"><div class="ps-emoji-box">🦘</div><div><div class="ps-uni-name">University of Melbourne</div><div class="ps-loc">🇦🇺 Melbourne, Australia</div></div></div>
+                  <div class="ps-desc">Popular destination for international students worldwide.</div>
+                  <div class="ps-footer"><div class="ps-tag"><span class="ps-tag-t">🏆 #2 in Australia</span></div><div class="ps-arrow">→</div></div>
+                </div>
+              </div>
+              <div class="ps-card" style="opacity:0.5;">
+                <div class="ps-acc" style="background:#215732;"></div>
+                <div class="ps-card-b">
+                  <div class="ps-card-h"><div class="ps-emoji-box">⛰️</div><div><div class="ps-uni-name">ETH Zürich</div><div class="ps-loc">🇨🇭 Zürich, Switzerland</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="phone-label">HomeScreen.js</div>
+        </div>
+
+        <!-- DETAILS SCREEN PHONE -->
+        <div>
+          <div class="phone-frame">
+            <div class="phone-notch"><div class="phone-notch-bar"></div></div>
+            <div class="phone-screen">
+              <div class="pd-back"><span class="pd-back-a">←</span><span class="pd-back-t">Universities</span></div>
+              <div class="pd-hero">
+                <div class="pd-badge">🍁</div>
+                <div class="pd-name">University of Toronto</div>
+                <div><div class="pd-loc-pill"><span style="font-size:9px;">🇨🇦</span><span class="pd-loc-t">Toronto, Canada</span></div></div>
+                <div><span class="pd-rank">🏆 #1 in Canada · #21 Globally</span></div>
+              </div>
+              <div class="pd-line" style="background:#003D7C;"></div>
+              <div class="pd-sec-lbl">About</div>
+              <div class="pd-about">The University of Toronto is a globally top-ranked public research university. Founded in 1827, consistently among top 25 globally with 700+ undergraduate programs...</div>
+              <div class="pd-sec-lbl">Key Stats</div>
+              <div class="pd-badge-grid">
+                <div class="pd-stat"><div class="pd-stat-i">📅</div><div class="pd-stat-v">1827</div><div class="pd-stat-l">Founded</div></div>
+                <div class="pd-stat"><div class="pd-stat-i">👩‍🎓</div><div class="pd-stat-v">97,000+</div><div class="pd-stat-l">Students</div></div>
+              </div>
+              <div class="pd-badge-grid" style="margin-bottom:8px;">
+                <div class="pd-stat"><div class="pd-stat-i">🎯</div><div class="pd-stat-v">43%</div><div class="pd-stat-l">Acceptance</div></div>
+                <div class="pd-stat"><div class="pd-stat-i">💰</div><div class="pd-stat-v">$30K–55K</div><div class="pd-stat-l">Tuition</div></div>
+              </div>
+              <div class="pd-sec-lbl">Programs</div>
+              <div class="pd-tags">
+                <div class="pd-tag"><span class="pd-tag-t">Computer Science</span></div>
+                <div class="pd-tag"><span class="pd-tag-t">Medicine</span></div>
+                <div class="pd-tag"><span class="pd-tag-t">Law</span></div>
+                <div class="pd-tag"><span class="pd-tag-t">Business</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="phone-label">DetailsScreen.js</div>
+        </div>
+      </div>
+
+      <!-- Data flow -->
+      <div class="highlight-box">
+        <strong>Navigation Flow:</strong> Tapping a card in HomeScreen calls <code>navigation.navigate("Details", { university: item })</code>, passing the full university object. DetailsScreen receives it via <code>route.params.university</code>.
+      </div>
+    </section>
+
+    <!-- SETUP -->
+    <section id="setup">
+      <div class="section-eyebrow">Getting Started</div>
+      <h2 class="section-title">Setup & Run</h2>
+      <p class="section-subtitle">Get the app running in under 5 minutes.</p>
+
+      <div class="card" style="margin-bottom:20px;">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <h4>Clone the repository</h4>
+              <p>Run the git command to download the project to your machine.</p>
+              <div class="code-wrap" style="margin-top:10px;">
+                <pre><code>git clone https://github.com/YOUR_USERNAME/uni-explorer.git
+cd uni-explorer</code></pre>
+              </div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <h4>Install dependencies</h4>
+              <p>Installs all packages listed in package.json including Expo and React Navigation.</p>
+              <div class="code-wrap" style="margin-top:10px;">
+                <pre><code>npm install</code></pre>
+              </div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <h4>Start the development server</h4>
+              <p>Expo launches a local Metro bundler and shows a QR code.</p>
+              <div class="code-wrap" style="margin-top:10px;">
+                <pre><code>npx expo start</code></pre>
+              </div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <h4>Open on your device</h4>
+              <p>Press <strong>i</strong> for iOS Simulator, <strong>a</strong> for Android Emulator, or scan the QR with the <strong>Expo Go</strong> app on your phone.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="highlight-box amber">
+        <strong>Requirements:</strong> Node.js v18+, npm or yarn, and Expo Go app on your phone (for physical device testing). iOS Simulator requires macOS + Xcode.
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         FILE 1: App.js
+    ════════════════════════════════════════════ -->
+    <section id="file-appjs">
+      <div class="section-eyebrow">File 01</div>
+      <h2 class="section-title">App.js</h2>
+      <p class="section-subtitle">The root entry point of the entire application.</p>
+
+      <div class="file-card open">
+        <div class="file-card-header" onclick="toggleCard(this)">
+          <div class="file-card-name">
+            <span class="file-icon">⚡</span>
+            <span class="file-path">App.js</span>
+            <span class="file-desc">— Root Component</span>
+          </div>
+          <div class="file-card-meta">
+            <span class="file-badge badge-js">JS</span>
+            <span class="toggle-icon">▼</span>
+          </div>
+        </div>
+        <div class="file-card-body">
+          <div class="explain-box">
+            <h4>What this file does</h4>
+            <p>App.js is the top-level component that React Native renders first. It wraps the entire app in <code>SafeAreaProvider</code> (which provides safe area insets for notches and home bars) and then renders the <code>AppNavigator</code> which contains all the screen routing logic.</p>
+            <div class="key-points">
+              <div class="key-point"><div class="dot"></div><span><strong>SafeAreaProvider</strong> — must wrap the whole app so every screen can use <code>useSafeAreaInsets()</code></span></div>
+              <div class="key-point"><div class="dot"></div><span><strong>AppNavigator</strong> — delegates all routing to the navigation file, keeping App.js clean</span></div>
+              <div class="key-point"><div class="dot"></div><span>Expo's <code>AppEntry.js</code> (in package.json "main") automatically calls this component</span></div>
+            </div>
+          </div>
+          <div class="code-wrap">
+            <span class="code-lang">JS</span>
+            <pre><code><span class="cmt">// App.js</span>
+<span class="cmt">// Root component — sets up safe area and navigation</span>
+
+<span class="kw">import</span> React <span class="kw">from</span> <span class="str">"react"</span><span class="punc">;</span>
+<span class="kw">import</span> <span class="punc">{</span> SafeAreaProvider <span class="punc">}</span> <span class="kw">from</span> <span class="str">"react-native-safe-area-context"</span><span class="punc">;</span>
+<span class="kw">import</span> <span class="cls">AppNavigator</span> <span class="kw">from</span> <span class="str">"./src/navigation/AppNavigator"</span><span class="punc">;</span>
+
+<span class="kw">export default function</span> <span class="fn">App</span><span class="punc">() {</span>
+  <span class="kw">return</span> <span class="punc">(</span>
+    <span class="tag-c">&lt;SafeAreaProvider&gt;</span>
+      <span class="tag-c">&lt;AppNavigator</span> <span class="tag-c">/&gt;</span>
+    <span class="tag-c">&lt;/SafeAreaProvider&gt;</span>
+  <span class="punc">);</span>
+<span class="punc">}</span></code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FILE 2: app.json -->
+    <section id="file-appjson">
+      <div class="section-eyebrow">File 02</div>
+      <h2 class="section-title">app.json</h2>
+      <p class="section-subtitle">Expo configuration — app name, icon, splash screen, platform settings.</p>
+      <div class="file-card open">
+        <div class="file-card-header" onclick="toggleCard(this)">
+          <div class="file-card-name"><span class="file-icon">⚙️</span><span class="file-path">app.json</span><span class="file-desc">— Expo Config</span></div>
+          <div class="file-card-meta"><span class="file-badge badge-json">JSON</span><span class="toggle-icon">▼</span></div>
+        </div>
+        <div class="file-card-body">
+          <div class="explain-box">
+            <h4>What this file does</h4>
+            <p>Expo reads <code>app.json</code> at build time to configure the app for each platform. It sets the display name, bundle identifier, icon, splash screen color, and which platforms are supported.</p>
+            <div class="key-points">
+              <div class="key-point"><div class="dot"></div><span><strong>slug</strong> — unique URL-safe identifier used by Expo's cloud services</span></div>
+              <div class="key-point"><div class="dot"></div><span><strong>backgroundColor</strong> on splash — dark background so there's no white flash on startup</span></div>
+              <div class="key-point"><div class="dot"></div><span><strong>supportsTablet: true</strong> — enables iPad layout support on iOS</span></div>
+              <div class="key-point"><div class="dot"></div><span><strong>bundleIdentifier / package</strong> — unique app ID required for App Store / Play Store publishing</span></div>
+            </div>
+          </div>
+          <div class="code-wrap">
+            <span class="code-lang">JSON</span>
+            <pre><code><span class="punc">{</span>
+  <span class="prop">"expo"</span><span class="punc">: {</span>
+    <span class="prop">"name"</span><span class="punc">:</span> <span class="str">"UniExplorer"</span><span class="punc">,</span>
+    <span class="prop">"slug"</span><span class="punc">:</span> <span class="str">"uni-explorer"</span><span class="punc">,</span>         <span class="cmt">// URL-safe unique name</span>
+    <span class="prop">"version"</span><span class="punc">:</span> <span class="str">"1.0.0"</span><span class="punc">,</span>
+    <span class="prop">"orientation"</span><span class="punc">:</span> <span class="str">"portrait"</span><span class="punc">,</span>    <span class="cmt">// locks rotation</span>
+    <span class="prop">"icon"</span><span class="punc">:</span> <span class="str">"./assets/icon.png"</span><span class="punc">,</span>
+    <span class="prop">"userInterfaceStyle"</span><span class="punc">:</span> <span class="str">"light"</span><span class="punc">,</span>
+    <span class="prop">"splash"</span><span class="punc">: {</span>
+      <span class="prop">"resizeMode"</span><span class="punc">:</span> <span class="str">"contain"</span><span class="punc">,</span>
+      <span class="prop">"backgroundColor"</span><span class="punc">:</span> <span class="str">"#0A0E1A"</span>  <span class="cmt">// matches app dark bg</span>
+    <span class="punc">},</span>
+    <span class="prop">"assetBundlePatterns"</span><span class="punc">: [</span><span class="str">"**/*"</span><span class="punc">],</span>
+    <span class="prop">"ios"</span><span class="punc">: {</span>
+      <span class="prop">"supportsTablet"</span><span class="punc">:</span> <span class="kw">true</span><span class="punc">,</span>
+      <span class="prop">"bundleIdentifier"</span><span class="punc">:</span> <span class="str">"com.uniexplorer.app"</span>
+    <span class="punc">},</span>
+    <span class="prop">"android"</span><span class="punc">: {</span>
+      <span class="prop">"adaptiveIcon"</span><span class="punc">: {</span>
+        <span class="prop">"backgroundColor"</span><span class="punc">:</span> <span class="str">"#0A0E1A"</span>
+      <span class="punc">},</span>
+      <span class="prop">"package"</span><span class="punc">:</span> <span class="str">"com.uniexplorer.app"</span>
+    <span class="punc">},</span>
+    <span class="prop">"web"</span><span class="punc">: {</span>
+      <span class="prop">"favicon"</span><span class="punc">:</span> <span class="str">"./assets/favicon.png"</span><span class="punc">,</span>
+      <span class="prop">"bundler"</span><span class="punc">:</span> <span class="str">"metro"</span>
+    <span class="punc">}</span>
+  <span class="punc">}</span>
+<span class="punc">}</span></code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FILE 3: package.json -->
+    <section id="file-pkg">
+      <div class="section-eyebrow">File 03</div>
+      <h2 class="section-title">package.json</h2>
+      <p class="section-subtitle">All project dependencies and npm scripts.</p>
+      <div class="file-card open">
+        <div class="file-card-header" onclick="toggleCard(this)">
+          <div class="file-card-name"><span class="file-icon">📦</span><span class="file-path">package.json</span><span class="file-desc">— Dependencies</span></div>
+          <div class="file-card-meta"><span class="file-badge badge-json">JSON</span><span class="toggle-icon">▼</span></div>
+        </div>
+        <div class="file-card-body">
+          <div class="explain-box">
+            <h4>Dependencies Explained</h4>
+            <div class="tbl-wrap" style="margin-top:10px;">
+              <table>
+                <thead><tr><th>Package</th><th>Purpose</th></tr></thead>
+                <tbody>
+                  <tr><td>expo ~50</td><td>Core Expo SDK — provides dev tools, native modules, and build pipeline</td></tr>
+                  <tr><td>react-native 0.73</td><td>The React Native framework itself</td></tr>
+                  <tr><td>@react-navigation/native</td><td>Navigation container — wraps the whole app's navigation state</td></tr>
+                  <tr><td>@react-navigation/native-stack</td><td>Native push/pop screen stack with iOS/Android platform animations</td></tr>
+                  <tr><td>react-native-screens</td><td>Uses native screen components for better performance</td></tr>
+                  <tr><td>react-native-safe-area-context</td><td>Provides safe area insets for notch/home bar avoidance</td></tr>
+                  <tr><td>expo-linear-gradient</td><td>Native gradient component (available for future use)</td></tr>
+                  <tr><td>expo-status-bar</td><td>Controls status bar style (light/dark text) per screen</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="code-wrap">
+            <span class="code-lang">JSON</span>
+            <pre><code><span class="punc">{</span>
+  <span class="prop">"name"</span><span class="punc">:</span> <span class="str">"uni-explorer"</span><span class="punc">,</span>
+  <span class="prop">"version"</span><span class="punc">:</span> <span class="str">"1.0.0"</span><span class="punc">,</span>
+  <span class="prop">"main"</span><span class="punc">:</span> <span class="str">"node_modules/expo/AppEntry.js"</span><span class="punc">,</span>
+  <span class="prop">"scripts"</span><span class="punc">: {</span>
+    <span class="prop">"start"</span><span class="punc">:</span>   <span class="str">"expo start"</span><span class="punc">,</span>
+    <span class="prop">"android"</span><span class="punc">:</span> <span class="str">"expo start --android"</span><span class="punc">,</span>
+    <span class="prop">"ios"</span><span class="punc">:</span>     <span class="str">"expo start --ios"</span><span class="punc">,</span>
+    <span class="prop">"web"</span><span class="punc">:</span>     <span class="str">"expo start --web"</span>
+  <span class="punc">},</span>
+  <span class="prop">"dependencies"</span><span class="punc">: {</span>
+    <span class="prop">"@react-navigation/native"</span><span class="punc">:</span>       <span class="str">"^6.1.9"</span><span class="punc">,</span>
+    <span class="prop">"@react-navigation/native-stack"</span><span class="punc">:</span> <span class="str">"^6.9.17"</span><span class="punc">,</span>
+    <span class="prop">"expo"</span><span class="punc">:</span>                           <span class="str">"~50.0.6"</span><span class="punc">,</span>
+    <span class="prop">"expo-linear-gradient"</span><span class="punc">:</span>           <span class="str">"~12.7.2"</span><span class="punc">,</span>
+    <span class="prop">"expo-status-bar"</span><span class="punc">:</span>               <span class="str">"~1.11.1"</span><span class="punc">,</span>
+    <span class="prop">"react"</span><span class="punc">:</span>                          <span class="str">"18.2.0"</span><span class="punc">,</span>
+    <span class="prop">"react-native"</span><span class="punc">:</span>                   <span class="str">"0.73.4"</span><span class="punc">,</span>
+    <span class="prop">"react-native-safe-area-context"</span><span class="punc">:</span> <span class="str">"4.8.2"</span><span class="punc">,</span>
+    <span class="prop">"react-native-screens"</span><span class="punc">:</span>           <span class="str">"~3.29.0"</span>
+  <span class="punc">},</span>
+  <span class="prop">"devDependencies"</span><span class="punc">: {</span>
+    <span class="prop">"@babel/core"</span><span class="punc">:</span> <span class="str">"^7.20.0"</span>
+  <span class="punc">},</span>
+  <span class="prop">"private"</span><span class="punc">:</span> <span class="kw">true</span>
+<span class="punc">}</span></code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FILE 4: babel -->
+    <section id="file-babel">
+      <div class="section-eyebrow">File 04</div>
+      <h2 class="section-title">babel.config.js</h2>
+      <p class="section-subtitle">Transpiler config — converts modern JS/JSX to compatible JavaScript.</p>
+      <div class="file-card open">
+        <div class="file-card-header" onclick="toggleCard(this)">
+          <div class="file-card-name"><span class="file-icon">🔧</span><span class="file-path">babel.config.js</span><span class="file-desc">— Transpiler</span></div>
+          <div class="file-card-meta"><span class="file-badge badge-config">Config</span><span class="toggle-icon">▼</span></div>
+        </div>
+        <div class="file-card-body">
+          <div class="explain-box">
+            <h4>What this file does</h4>
+            <p>Babel is a JavaScript transpiler that converts JSX and modern ES6+ syntax into code that runs on both Android (JavaScriptCore) and iOS (Hermes). The <code>babel-preset-expo</code> preset includes all the transformations needed for Expo apps — JSX, class properties, decorators, and more.</p>
+            <div class="key-points">
+              <div class="key-point"><div class="dot"></div><span><code>api.cache(true)</code> — caches the config result so Babel runs faster on subsequent builds</span></div>
+              <div class="key-point"><div class="dot"></div><span><code>babel-preset-expo</code> — wraps <code>@babel/preset-react</code> and <code>@babel/preset-typescript</code> with Expo-specific options</span></div>
+            </div>
+          </div>
+          <div class="code-wrap">
+            <span class="code-lang">JS</span>
+            <pre><code><span class="fn">module</span><span class="punc">.</span><span class="prop">exports</span> <span class="kw">= function</span> <span class="punc">(</span>api<span class="punc">) {</span>
+  api<span class="punc">.</span><span class="fn">cache</span><span class="punc">(</span><span class="kw">true</span><span class="punc">);</span>
+  <span class="kw">return</span> <span class="punc">{</span>
+    <span class="prop">presets</span><span class="punc">: [</span><span class="str">'babel-preset-expo'</span><span class="punc">],</span>
+  <span class="punc">};</span>
+<span class="punc">};</span></code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FILE 5: universities.js -->
+    <section id="file-data">
+      <div class="section-eyebrow">File 05</div>
+      <h2 class="section-title">src/data/universities.js</h2>
+      <p class="section-subtitle">Static data source — 8 university objects with all fields used across both screens.</p>
+      <div class="file-card open">
+        <div class="file-card-header" onclick="toggleCard(this)">
+          <div class="file-card-name"><span class="file-icon">🗃️</span><span class="file-path">src/data/universities.js</span><span class="file-desc">— Data</span></div>
+          <div class="file-card-meta"><span class="file-badge badge-js">JS</span><span class="toggle-icon">▼</span></div>
+        </div>
+        <div class="file-card-body">
+          <div class="explain-box">
+            <h4>Data shape — each university object has these fields:</h4>
+            <div class="tbl-wrap" style="margin-top:10px;">
+              <table>
+                <thead><tr><th>Field</th><th>Type</th><th>Used in</th><th>Purpose</th></tr></thead>
+                <tbody>
+                  <tr><td>id</td><td>number</td><td>Both</td><td>Unique key for FlatList</td></tr>
+                  <tr><td>university</td><td>string</td><td>Both</td><td>Full official name</td></tr>
+                  <tr><td>country / city</td><td>string</td><td>Both</td><td>Location display</td></tr>
+                  <tr><td>flag / emoji</td><td>string</td><td>Both</td><td>Visual icons</td></tr>
+                  <tr><td>description</td><td>string</td><td>Home</td><td>Short card blurb (2 lines)</td></tr>
+                  <tr><td>fullDescription</td><td>string</td><td>Details</td><td>Long paragraph</td></tr>
+                  <tr><td>programs</td><td>string[]</td><td>Details</td><td>Rendered as ProgramTag pills</td></tr>
+                  <tr><td>tuition / acceptance / founded / students</td><td>string</td><td>Details</td><td>InfoBadge stats</td></tr>
+                  <tr><td>ranking</td><td>string</td><td>Both</td><td>Shown on card & details hero</td></tr>
+                  <tr><td>website</td><td>string</td><td>Details</td><td>Website card link</td></tr>
+                  <tr><td>accentColor</td><td>hex string</td><td>Both</td><td>Card left bar + details divider</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="code-wrap">
+            <span class="code-lang">JS</span>
+            <pre><code><span class="kw">const</span> universities <span class="punc">= [</span>
+  <span class="punc">{</span>
+    <span class="prop">id</span><span class="punc">:</span> <span class="num">1</span><span class="punc">,</span>
+    <span class="prop">university</span><span class="punc">:</span> <span class="str">"University of Toronto"</span><span class="punc">,</span>
+    <span class="prop">country</span><span class="punc">:</span> <span class="str">"Canada"</span><span class="punc">,</span>
+    <span class="prop">city</span><span class="punc">:</span> <span class="str">"Toronto"</span><span class="punc">,</span>
+    <span class="prop">flag</span><span class="punc">:</span> <span class="str">"🇨🇦"</span><span class="punc">,</span>
+    <span class="prop">description</span><span class="punc">:</span> <span class="str">"Top ranked university offering multiple international programs."</span><span class="punc">,</span>
+    <span class="prop">fullDescription</span><span class="punc">:</span> <span class="str">"The University of Toronto is a globally top-ranked public research university..."</span><span class="punc">,</span>
+    <span class="prop">programs</span><span class="punc">: [</span><span class="str">"Computer Science"</span><span class="punc">,</span> <span class="str">"Medicine"</span><span class="punc">,</span> <span class="str">"Law"</span><span class="punc">,</span> <span class="str">"Business"</span><span class="punc">,</span> <span class="str">"Engineering"</span><span class="punc">],</span>
+    <span class="prop">tuition</span><span class="punc">:</span> <span class="str">"$30,000–$55,000 CAD/year"</span><span class="punc">,</span>
+    <span class="prop">acceptance</span><span class="punc">:</span> <span class="str">"43%"</span><span class="punc">,</span>
+    <span class="prop">founded</span><span class="punc">:</span> <span class="str">"1827"</span><span class="punc">,</span>
+    <span class="prop">students</span><span class="punc">:</span> <span class="str">"97,000+"</span><span class="punc">,</span>
+    <span class="prop">ranking</span><span class="punc">:</span> <span class="str">"#1 in Canada · #21 Globally (QS 2024)"</span><span class="punc">,</span>
+    <span class="prop">website</span><span class="punc">:</span> <span class="str">"https://www.utoronto.ca"</span><span class="punc">,</span>
+    <span class="prop">accentColor</span><span class="punc">:</span> <span class="str">"#003D7C"</span><span class="punc">,</span>
+    <span class="prop">emoji</span><span class="punc">:</span> <span class="str">"🍁"</span><span class="punc">,</span>
+  <span class="punc">},</span>
+  <span class="cmt">// ... 7 more university objects (Melbourne, ETH Zürich,</span>
+  <span class="cmt">//     NUS, TU Munich, Tokyo, Cape Town, TU Delft)</span>
+<span class="punc">];</span>
+
+<span class="kw">export default</span> universities<span class="punc">;</span></code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FILE 6: theme -->
+    <section id="file-theme">
+      <div class="section-eyebrow">File 06</div>
+      <h2 class="section-title">src/theme/index.js</h2>
+      <p class="section-subtitle">Central design system — colors, typography, spacing, and shadows in one place.</p>
+      <div class="file-card open">
+        <div class="file-card-header" onclick="toggleCard(this)">
+          <div class="file-card-name"><span class="file-icon">🎨</span><span class="file-path">src/theme/index.js</span><span class="file-desc">— Design Tokens</span></div>
+          <div class="file-card-meta"><span class="file-badge badge-js">JS</span><span class="toggle-icon">▼</span></div>
+        </div>
+        <div class="file-card-body">
+          <div class="explain-box">
+            <h4>Why a central theme file?</h4>
+            <p>Instead of hardcoding values like <code>#131929</code> or <code>16</code> directly in each component, we export named constants. If you want to change the accent blue, you change it in one place and it updates everywhere.</p>
+            <div class="key-points">
+              <div class="key-point"><div class="dot"></div><span><strong>Colors</strong> — background layers (bg → surface → surfaceElevated), text hierarchy, accent, tag</span></div>
+              <div class="key-point"><div class="dot"></div><span><strong>Typography</strong> — 7 font sizes (xs→xxxl), 5 weights, 3 line heights</span></div>
+              <div class="key-point"><div class="dot"></div><span><strong>Spacing</strong> — 4-point scale: xs=4, sm=8, md=16, lg=24, xl=32, xxl=48</span></div>
+              <div class="key-point"><div class="dot"></div><span><strong>Shadows</strong> — pre-built shadow objects for cards and glow effects</span></div>
+            </div>
+          </div>
+          <div class="code-wrap">
+            <span class="code-lang">JS</span>
+            <pre><code><span class="kw">export const</span> Colors <span class="punc">= {</span>
+  <span class="cmt">// Background layers (darkest to lightest)</span>
+  <span class="prop">background</span><span class="punc">:</span>        <span class="str">"#0A0E1A"</span><span class="punc">,</span>   <span class="cmt">// page bg</span>
+  <span class="prop">surface</span><span class="punc">:</span>          <span class="str">"#131929"</span><span class="punc">,</span>   <span class="cmt">// cards</span>
+  <span class="prop">surfaceElevated</span><span class="punc">:</span>  <span class="str">"#1C2539"</span><span class="punc">,</span>   <span class="cmt">// inputs, badges</span>
+  <span class="prop">border</span><span class="punc">:</span>           <span class="str">"#252E45"</span><span class="punc">,</span>
+
+  <span class="cmt">// Text hierarchy</span>
+  <span class="prop">textPrimary</span><span class="punc">:</span>      <span class="str">"#F0F4FF"</span><span class="punc">,</span>   <span class="cmt">// headings</span>
+  <span class="prop">textSecondary</span><span class="punc">:</span>    <span class="str">"#8B96B5"</span><span class="punc">,</span>   <span class="cmt">// body text</span>
+  <span class="prop">textMuted</span><span class="punc">:</span>        <span class="str">"#4A5578"</span><span class="punc">,</span>   <span class="cmt">// labels, hints</span>
+
+  <span class="cmt">// Accent blue</span>
+  <span class="prop">accent</span><span class="punc">:</span>           <span class="str">"#4F8EF7"</span><span class="punc">,</span>
+  <span class="prop">accentLight</span><span class="punc">:</span>      <span class="str">"rgba(79,142,247,0.15)"</span><span class="punc">,</span>
+  <span class="prop">tag</span><span class="punc">:</span>              <span class="str">"#1E2D4A"</span><span class="punc">,</span>
+  <span class="prop">tagText</span><span class="punc">:</span>          <span class="str">"#7EB3FF"</span><span class="punc">,</span>
+<span class="punc">};</span>
+
+<span class="kw">export const</span> Typography <span class="punc">= {</span>
+  <span class="prop">fontSizes</span><span class="punc">: {</span>
+    <span class="prop">xs</span><span class="punc">:</span> <span class="num">11</span><span class="punc">,</span> <span class="prop">sm</span><span class="punc">:</span> <span class="num">13</span><span class="punc">,</span> <span class="prop">md</span><span class="punc">:</span> <span class="num">15</span><span class="punc">,</span> <span class="prop">lg</span><span class="punc">:</span> <span class="num">17</span><span class="punc">,</span>
+    <span class="prop">xl</span><span class="punc">:</span> <span class="num">20</span><span class="punc">,</span> <span class="prop">xxl</span><span class="punc">:</span> <span class="num">26</span><span class="punc">,</span> <span class="prop">xxxl</span><span class="punc">:</span> <span class="num">34</span>
+  <span class="punc">},</span>
+  <span class="prop">fontWeights</span><span class="punc">: {</span>
+    <span class="prop">regular</span><span class="punc">:</span> <span class="str">"400"</span><span class="punc">,</span> <span class="prop">medium</span><span class="punc">:</span> <span class="str">"500"</span><span class="punc">,</span>
+    <span class="prop">semibold</span><span class="punc">:</span> <span class="str">"600"</span><span class="punc">,</span> <span class="prop">bold</span><span class="punc">:</span> <span class="str">"700"</span><span class="punc">,</span> <span class="prop">heavy</span><span class="punc">:</span> <span class="str">"800"</span>
+  <span class="punc">},</span>
+<span class="punc">};</span>
+
+<span class="kw">export const</span> Spacing <span class="punc">= {</span>
+  <span class="prop">xs</span><span class="punc">:</span> <span class="num">4</span><span class="punc">,</span> <span class="prop">sm</span><span class="punc">:</span> <span class="num">8</span><span class="punc">,</span> <span class="prop">md</span><span class="punc">:</span> <span class="num">16</span><span class="punc">,</span>
+  <span class="prop">lg</span><span class="punc">:</span> <span class="num">24</span><span class="punc">,</span> <span class="prop">xl</span><span class="punc">:</span> <span class="num">32</span><span class="punc">,</span> <span class="prop">xxl</span><span class="punc">:</span> <span class="num">48</span>
+<span class="punc">};</span>
+
+<span class="kw">export const</span> BorderRadius <span class="punc">= {</span>
+  <span class="prop">sm</span><span class="punc">:</span> <span class="num">8</span><span class="punc">,</span> <span class="prop">md</span><span class="punc">:</span> <span class="num">12</span><span class="punc">,</span> <span class="prop">lg</span><span class="punc">:</span> <span class="num">16</span><span class="punc">,</span> <span class="prop">xl</span><span class="punc">:</span> <span class="num">24</span><span class="punc">,</span> <span class="prop">full</span><span class="punc">:</span> <span class="num">9999</span>
+<span class="punc">};</span>
+
+<span class="kw">export const</span> Shadows <span class="punc">= {</span>
+  <span class="prop">card</span><span class="punc">: {</span>
+    <span class="prop">shadowColor</span><span class="punc">:</span> <span class="str">"#000"</span><span class="punc">,</span>
+    <span class="prop">shadowOffset</span><span class="punc">: {</span> <span class="prop">width</span><span class="punc">:</span> <span class="num">0</span><span class="punc">,</span> <span class="prop">height</span><span class="punc">:</span> <span class="num">4</span> <span class="punc">},</span>
+    <span class="prop">shadowOpacity</span><span class="punc">:</span> <span class="num">0.3</span><span class="punc">,</span>
+    <span class="prop">shadowRadius</span><span class="punc">:</span> <span class="num">12</span><span class="punc">,</span>
+    <span class="prop">elevation</span><span class="punc">:</span> <span class="num">8</span>      <span class="cmt">// Android shadow</span>
+  <span class="punc">},</span>
+<span class="punc">};</span></code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FILE 7: useResponsive -->
+    <section id="file-hook">
+      <div class="section-eyebrow">File 07</div>
+      <h2 class="section-title">src/hooks/useResponsive.js</h2>
+      <p class="section-subtitle">Custom React hook that detects screen size and returns responsive values.</p>
+      <div class="file-card open">
+        <div class="file-card-header" onclick="toggleCard(this)">
+          <div class="file-card-name"><span class="file-icon">🔁</span><span class="file-path">src/hooks/useResponsive.js</span><span class="file-desc">— Hook</span></div>
+          <div class="file-card-meta"><span class="file-badge badge-js">JS</span><span class="toggle-icon">▼</span></div>
+        </div>
+        <div class="file-card-body">
+          <div class="explain-box">
+            <h4>How responsive design works in React Native</h4>
+            <p>React Native doesn't have CSS media queries. Instead, we use <code>useWindowDimensions()</code> which re-renders the component whenever the window size changes (e.g., when a tablet rotates). This hook abstracts that logic into easy-to-use boolean flags and values.</p>
+            <div class="key-points">
+              <div class="key-point"><div class="dot"></div><span><code>isTablet</code> — true when width ≥ 768px (iPad, large Android tablets)</span></div>
+              <div class="key-point"><div class="dot"></div><span><code>numColumns</code> — 2 on tablet (grid), 1 on phone (single column)</span></div>
+              <div class="key-point"><div class="dot"></div><span><code>horizontalPadding</code> — 32px on tablet, 16px on phone</span></div>
+              <div class="key-point"><div class="dot"></div><span><code>fontScale</code> — multiplier: 0.9× on tiny phones, 1.1× on tablets</span></div>
+              <div class="key-point"><div class="dot"></div><span><code>scale(size)</code> — utility to scale pixel values proportionally to screen width</span></div>
+            </div>
+          </div>
+          <div class="code-wrap">
+            <span class="code-lang">JS</span>
+            <pre><code><span class="kw">import</span> <span class="punc">{</span> Dimensions<span class="punc">,</span> useWindowDimensions <span class="punc">}</span> <span class="kw">from</span> <span class="str">"react-native"</span><span class="punc">;</span>
+
+<span class="kw">const</span> BREAKPOINTS <span class="punc">= {</span>
+  <span class="prop">sm</span><span class="punc">:</span> <span class="num">375</span><span class="punc">,</span>   <span class="cmt">// small phones (SE, Galaxy A)</span>
+  <span class="prop">md</span><span class="punc">:</span> <span class="num">428</span><span class="punc">,</span>   <span class="cmt">// large phones (Pro Max)</span>
+  <span class="prop">lg</span><span class="punc">:</span> <span class="num">768</span><span class="punc">,</span>   <span class="cmt">// tablets</span>
+  <span class="prop">xl</span><span class="punc">:</span> <span class="num">1024</span><span class="punc">,</span>  <span class="cmt">// large tablets / desktop</span>
+<span class="punc">};</span>
+
+<span class="kw">export function</span> <span class="fn">useResponsive</span><span class="punc">() {</span>
+  <span class="kw">const</span> <span class="punc">{</span> width<span class="punc">,</span> height <span class="punc">} =</span> <span class="fn">useWindowDimensions</span><span class="punc">();</span>
+  <span class="cmt">// Re-runs automatically on rotation / resize</span>
+
+  <span class="kw">const</span> isTablet <span class="punc">=</span> width <span class="punc">&gt;=</span> BREAKPOINTS<span class="punc">.</span>lg<span class="punc">;</span>
+
+  <span class="kw">return</span> <span class="punc">{</span>
+    width<span class="punc">,</span> height<span class="punc">,</span>
+    <span class="prop">isSmall</span><span class="punc">:</span>           width <span class="punc">&lt;</span> BREAKPOINTS<span class="punc">.</span>sm<span class="punc">,</span>
+    isTablet<span class="punc">,</span>
+    <span class="prop">numColumns</span><span class="punc">:</span>        isTablet <span class="punc">?</span> <span class="num">2</span> <span class="punc">:</span> <span class="num">1</span><span class="punc">,</span>
+    <span class="prop">horizontalPadding</span><span class="punc">:</span> isTablet <span class="punc">?</span> <span class="num">32</span> <span class="punc">:</span> <span class="num">16</span><span class="punc">,</span>
+    <span class="prop">fontScale</span><span class="punc">:</span>         width <span class="punc">&lt;</span> BREAKPOINTS<span class="punc">.</span>sm <span class="punc">?</span> <span class="num">0.9</span>
+                       <span class="punc">:</span> isTablet <span class="punc">?</span> <span class="num">1.1</span> <span class="punc">:</span> <span class="num">1</span><span class="punc">,</span>
+  <span class="punc">};</span>
+<span class="punc">}</span>
+
+<span class="cmt">// Scale a pixel value proportionally to screen width</span>
+<span class="kw">const</span> BASE_WIDTH <span class="punc">=</span> <span class="num">390</span><span class="punc">;</span>
+<span class="kw">export function</span> <span class="fn">scale</span><span class="punc">(</span>size<span class="punc">) {</span>
+  <span class="kw">const</span> <span class="punc">{</span> width <span class="punc">} =</span> Dimensions<span class="punc">.</span><span class="fn">get</span><span class="punc">(</span><span class="str">"window"</span><span class="punc">);</span>
+  <span class="kw">return</span> Math<span class="punc">.</span><span class="fn">round</span><span class="punc">((</span>size <span class="punc">*</span> width<span class="punc">) /</span> BASE_WIDTH<span class="punc">);</span>
+<span class="punc">}</span></code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FILE 8: AppNavigator -->
+    <section id="file-nav">
+      <div class="section-eyebrow">File 08</div>
+      <h2 class="section-title">src/navigation/AppNavigator.js</h2>
+      <p class="section-subtitle">Sets up React Navigation's native stack — the push/pop screen transition system.</p>
+      <div class="file-card open">
+        <div class="file-card-header" onclick="toggleCard(this)">
+          <div class="file-card-name"><span class="file-icon">🧭</span><span class="file-path">src/navigation/AppNavigator.js</span><span class="file-desc">— Navigation</span></div>
+          <div class="file-card-meta"><span class="file-badge badge-js">JS</span><span class="toggle-icon">▼</span></div>
+        </div>
+        <div class="file-card-body">
+          <div class="explain-box">
+            <h4>Navigation architecture</h4>
+            <p>React Navigation uses a <strong>stack</strong> metaphor: screens are pushed on top of each other. Going back pops the top screen off. <code>NavigationContainer</code> holds the navigation state tree. <code>createNativeStackNavigator</code> uses the platform's native navigation (UINavigationController on iOS, Fragment on Android) for performance.</p>
+            <div class="key-points">
+              <div class="key-point"><div class="dot"></div><span><code>headerShown: false</code> — hides the built-in header; each screen has its own custom header</span></div>
+              <div class="key-point"><div class="dot"></div><span><code>animation: "slide_from_right"</code> — standard push animation (slide new screen in from right)</span></div>
+              <div class="key-point"><div class="dot"></div><span><code>contentStyle</code> — sets the background color under screens to prevent white flash</span></div>
+              <div class="key-point"><div class="dot"></div><span>Screens receive <code>navigation</code> and <code>route</code> props automatically from the stack</span></div>
+            </div>
+          </div>
+          <div class="code-wrap">
+            <span class="code-lang">JS</span>
+            <pre><code><span class="kw">import</span> <span class="punc">{</span> NavigationContainer <span class="punc">}</span> <span class="kw">from</span> <span class="str">"@react-navigation/native"</span><span class="punc">;</span>
+<span class="kw">import</span> <span class="punc">{</span> createNativeStackNavigator <span class="punc">}</span> <span class="kw">from</span> <span class="str">"@react-navigation/native-stack"</span><span class="punc">;</span>
+<span class="kw">import</span> <span class="cls">HomeScreen</span> <span class="kw">from</span> <span class="str">"../screens/HomeScreen"</span><span class="punc">;</span>
+<span class="kw">import</span> <span class="cls">DetailsScreen</span> <span class="kw">from</span> <span class="str">"../screens/DetailsScreen"</span><span class="punc">;</span>
+
+<span class="kw">const</span> Stack <span class="punc">=</span> <span class="fn">createNativeStackNavigator</span><span class="punc">();</span>
+
+<span class="kw">export default function</span> <span class="fn">AppNavigator</span><span class="punc">() {</span>
+  <span class="kw">return</span> <span class="punc">(</span>
+    <span class="tag-c">&lt;NavigationContainer&gt;</span>             <span class="cmt">// holds nav state</span>
+      <span class="tag-c">&lt;Stack.Navigator</span>
+        <span class="attr">initialRouteName</span><span class="punc">=</span><span class="str">"Home"</span>        <span class="cmt">// first screen</span>
+        <span class="attr">screenOptions</span><span class="punc">={{</span>
+          <span class="prop">headerShown</span><span class="punc">:</span> <span class="kw">false</span><span class="punc">,</span>          <span class="cmt">// custom headers</span>
+          <span class="prop">contentStyle</span><span class="punc">: {</span>
+            <span class="prop">backgroundColor</span><span class="punc">:</span> Colors<span class="punc">.</span>background
+          <span class="punc">},</span>
+          <span class="prop">animation</span><span class="punc">:</span> <span class="str">"slide_from_right"</span>
+        <span class="punc">}}</span>
+      <span class="tag-c">&gt;</span>
+        <span class="tag-c">&lt;Stack.Screen</span> <span class="attr">name</span><span class="punc">=</span><span class="str">"Home"</span>    <span class="attr">component</span><span class="punc">={</span><span class="cls">HomeScreen</span><span class="punc">}</span>    <span class="tag-c">/&gt;</span>
+        <span class="tag-c">&lt;Stack.Screen</span> <span class="attr">name</span><span class="punc">=</span><span class="str">"Details"</span> <span class="attr">component</span><span class="punc">={</span><span class="cls">DetailsScreen</span><span class="punc">}</span> <span class="tag-c">/&gt;</span>
+      <span class="tag-c">&lt;/Stack.Navigator&gt;</span>
+    <span class="tag-c">&lt;/NavigationContainer&gt;</span>
+  <span class="punc">);</span>
+<span class="punc">}</span></code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FILE 9: HomeScreen -->
+    <section id="file-home">
+      <div class="section-eyebrow">File 09</div>
+      <h2 class="section-title">src/screens/HomeScreen.js</h2>
+      <p class="section-subtitle">The main screen — renders the searchable list of all universities.</p>
+      <div class="file-card open">
+        <div class="file-card-header" onclick="toggleCard(this)">
+          <div class="file-card-name"><span class="file-icon">📋</span><span class="file-path">src/screens/HomeScreen.js</span><span class="file-desc">— Screen</span></div>
+          <div class="file-card-meta"><span class="file-badge badge-js">JS</span><span class="toggle-icon">▼</span></div>
+        </div>
+        <div class="file-card-body">
+          <div class="explain-box">
+            <h4>Key concepts in this screen</h4>
+            <div class="key-points">
+              <div class="key-point"><div class="dot"></div><span><strong>FlatList</strong> — used instead of ScrollView because it virtualizes the list (only renders visible items), which is efficient for long lists. It takes <code>data</code>, <code>keyExtractor</code>, and <code>renderItem</code> props.</span></div>
+              <div class="key-point"><div class="dot"></div><span><strong>useMemo</strong> — the filter runs only when <code>searchQuery</code> or <code>universities</code> changes, not on every render. This prevents unnecessary computation.</span></div>
+              <div class="key-point"><div class="dot"></div><span><strong>ListHeaderComponent</strong> — the header (title, stats, search bar) scrolls with the list instead of being stuck above it.</span></div>
+              <div class="key-point"><div class="dot"></div><span><strong>ListEmptyComponent</strong> — shown automatically by FlatList when <code>data</code> is an empty array.</span></div>
+              <div class="key-point"><div class="dot"></div><span><strong>navigation.navigate("Details", { university: item })</strong> — passes the full university object to DetailsScreen via route params.</span></div>
+              <div class="key-point"><div class="dot"></div><span><strong>keyboardDismissMode="on-drag"</strong> — hides keyboard when user starts scrolling the list.</span></div>
+            </div>
+          </div>
+          <div class="code-wrap">
+            <span class="code-lang">JS</span>
+            <pre><code><span class="kw">export default function</span> <span class="fn">HomeScreen</span><span class="punc">({</span> navigation <span class="punc">}) {</span>
+  <span class="kw">const</span> <span class="punc">[</span>searchQuery<span class="punc">,</span> setSearchQuery<span class="punc">] =</span> <span class="fn">useState</span><span class="punc">(</span><span class="str">""</span><span class="punc">);</span>
+  <span class="kw">const</span> <span class="punc">{</span> horizontalPadding<span class="punc">,</span> fontScale <span class="punc">} =</span> <span class="fn">useResponsive</span><span class="punc">();</span>
+
+  <span class="cmt">// Filter only when searchQuery changes (performance)</span>
+  <span class="kw">const</span> filteredUniversities <span class="punc">=</span> <span class="fn">useMemo</span><span class="punc">(() =&gt; {</span>
+    <span class="kw">const</span> q <span class="punc">=</span> searchQuery<span class="punc">.</span><span class="fn">toLowerCase</span><span class="punc">().</span><span class="fn">trim</span><span class="punc">();</span>
+    <span class="kw">if</span> <span class="punc">(!</span>q<span class="punc">)</span> <span class="kw">return</span> universities<span class="punc">;</span>
+    <span class="kw">return</span> universities<span class="punc">.</span><span class="fn">filter</span><span class="punc">(</span>u <span class="punc">=&gt;</span>
+      u<span class="punc">.</span>university<span class="punc">.</span><span class="fn">toLowerCase</span><span class="punc">().</span><span class="fn">includes</span><span class="punc">(</span>q<span class="punc">) ||</span>
+      u<span class="punc">.</span>country<span class="punc">.</span><span class="fn">toLowerCase</span><span class="punc">().</span><span class="fn">includes</span><span class="punc">(</span>q<span class="punc">) ||</span>
+      u<span class="punc">.</span>city<span class="punc">.</span><span class="fn">toLowerCase</span><span class="punc">().</span><span class="fn">includes</span><span class="punc">(</span>q<span class="punc">)</span>
+    <span class="punc">);</span>
+  <span class="punc">}, [</span>searchQuery<span class="punc">]);</span>
+
+  <span class="kw">const</span> <span class="fn">handleCardPress</span> <span class="punc">= (</span>item<span class="punc">) =&gt; {</span>
+    <span class="cmt">// Navigate and pass full university object as route param</span>
+    navigation<span class="punc">.</span><span class="fn">navigate</span><span class="punc">(</span><span class="str">"Details"</span><span class="punc">, {</span> <span class="prop">university</span><span class="punc">:</span> item <span class="punc">});</span>
+  <span class="punc">};</span>
+
+  <span class="kw">return</span> <span class="punc">(</span>
+    <span class="tag-c">&lt;SafeAreaView</span> <span class="attr">style</span><span class="punc">={</span>styles<span class="punc">.</span>safeArea<span class="punc">}&gt;</span>
+      <span class="tag-c">&lt;FlatList</span>
+        <span class="attr">data</span><span class="punc">={</span>filteredUniversities<span class="punc">}</span>
+        <span class="attr">keyExtractor</span><span class="punc">={(</span>item<span class="punc">) =&gt;</span> <span class="fn">String</span><span class="punc">(</span>item<span class="punc">.</span>id<span class="punc">)}</span>
+        <span class="attr">renderItem</span><span class="punc">={({</span> item <span class="punc">}) =&gt;</span>
+          <span class="tag-c">&lt;UniversityCard</span> <span class="attr">item</span><span class="punc">={</span>item<span class="punc">}</span>
+            <span class="attr">onPress</span><span class="punc">={() =&gt;</span> <span class="fn">handleCardPress</span><span class="punc">(</span>item<span class="punc">)}</span> <span class="tag-c">/&gt;</span>
+        <span class="punc">}</span>
+        <span class="attr">ListHeaderComponent</span><span class="punc">={</span><span class="cls">ListHeader</span><span class="punc">}</span>   <span class="cmt">// scrolls with list</span>
+        <span class="attr">ListEmptyComponent</span><span class="punc">={</span><span class="cls">ListEmpty</span><span class="punc">}</span>    <span class="cmt">// shown when no results</span>
+        <span class="attr">keyboardDismissMode</span><span class="punc">=</span><span class="str">"on-drag"</span>
+        <span class="attr">showsVerticalScrollIndicator</span><span class="punc">={</span><span class="kw">false</span><span class="punc">}</span>
+      <span class="tag-c">/&gt;</span>
+    <span class="tag-c">&lt;/SafeAreaView&gt;</span>
+  <span class="punc">);</span>
+<span class="punc">}</span></code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FILE 10: DetailsScreen -->
+    <section id="file-details">
+      <div class="section-eyebrow">File 10</div>
+      <h2 class="section-title">src/screens/DetailsScreen.js</h2>
+      <p class="section-subtitle">Full university info view with fade-in animation and all detail sections.</p>
+      <div class="file-card open">
+        <div class="file-card-header" onclick="toggleCard(this)">
+          <div class="file-card-name"><span class="file-icon">🔍</span><span class="file-path">src/screens/DetailsScreen.js</span><span class="file-desc">— Screen</span></div>
+          <div class="file-card-meta"><span class="file-badge badge-js">JS</span><span class="toggle-icon">▼</span></div>
+        </div>
+        <div class="file-card-body">
+          <div class="explain-box">
+            <h4>Key concepts in this screen</h4>
+            <div class="key-points">
+              <div class="key-point"><div class="dot"></div><span><strong>route.params.university</strong> — receives the university object passed from HomeScreen via navigation.</span></div>
+              <div class="key-point"><div class="dot"></div><span><strong>Animated.Value</strong> — React Native's animation driver. <code>fadeAnim</code> goes from 0→1 (opacity), <code>slideAnim</code> from 24→0 (translateY).</span></div>
+              <div class="key-point"><div class="dot"></div><span><strong>Animated.parallel</strong> — runs both animations simultaneously so the screen fades in while sliding up.</span></div>
+              <div class="key-point"><div class="dot"></div><span><strong>useNativeDriver: true</strong> — runs animations on the native UI thread for 60fps performance, no JS bridge overhead.</span></div>
+              <div class="key-point"><div class="dot"></div><span><strong>navigation.goBack()</strong> — pops this screen off the stack, returning to HomeScreen.</span></div>
+              <div class="key-point"><div class="dot"></div><span><strong>accentColor + "25"</strong> — appends hex alpha to the accent color for a tinted badge background (25 = ~15% opacity).</span></div>
+            </div>
+          </div>
+          <div class="code-wrap">
+            <span class="code-lang">JS</span>
+            <pre><code><span class="kw">export default function</span> <span class="fn">DetailsScreen</span><span class="punc">({</span> route<span class="punc">,</span> navigation <span class="punc">}) {</span>
+  <span class="kw">const</span> <span class="punc">{</span> university <span class="punc">} =</span> route<span class="punc">.</span>params<span class="punc">;</span>  <span class="cmt">// data from HomeScreen</span>
+
+  <span class="cmt">// Animation values</span>
+  <span class="kw">const</span> fadeAnim  <span class="punc">=</span> <span class="fn">useRef</span><span class="punc">(</span><span class="kw">new</span> Animated<span class="punc">.</span><span class="fn">Value</span><span class="punc">(</span><span class="num">0</span><span class="punc">)).</span>current<span class="punc">;</span>
+  <span class="kw">const</span> slideAnim <span class="punc">=</span> <span class="fn">useRef</span><span class="punc">(</span><span class="kw">new</span> Animated<span class="punc">.</span><span class="fn">Value</span><span class="punc">(</span><span class="num">24</span><span class="punc">)).</span>current<span class="punc">;</span>
+
+  <span class="fn">useEffect</span><span class="punc">(() =&gt; {</span>
+    Animated<span class="punc">.</span><span class="fn">parallel</span><span class="punc">([</span>
+      Animated<span class="punc">.</span><span class="fn">timing</span><span class="punc">(</span>fadeAnim<span class="punc">, {</span>
+        <span class="prop">toValue</span><span class="punc">:</span> <span class="num">1</span><span class="punc">,</span> <span class="prop">duration</span><span class="punc">:</span> <span class="num">350</span><span class="punc">,</span> <span class="prop">useNativeDriver</span><span class="punc">:</span> <span class="kw">true</span>
+      <span class="punc">}),</span>
+      Animated<span class="punc">.</span><span class="fn">spring</span><span class="punc">(</span>slideAnim<span class="punc">, {</span>
+        <span class="prop">toValue</span><span class="punc">:</span> <span class="num">0</span><span class="punc">,</span> <span class="prop">speed</span><span class="punc">:</span> <span class="num">18</span><span class="punc">,</span> <span class="prop">bounciness</span><span class="punc">:</span> <span class="num">6</span><span class="punc">,</span> <span class="prop">useNativeDriver</span><span class="punc">:</span> <span class="kw">true</span>
+      <span class="punc">}),</span>
+    <span class="punc">]).</span><span class="fn">start</span><span class="punc">();</span>
+  <span class="punc">}, []);</span>
+
+  <span class="kw">return</span> <span class="punc">(</span>
+    <span class="tag-c">&lt;Animated.View</span> <span class="attr">style</span><span class="punc">={{</span>
+      <span class="prop">opacity</span><span class="punc">:</span> fadeAnim<span class="punc">,</span>
+      <span class="prop">transform</span><span class="punc">: [{</span> <span class="prop">translateY</span><span class="punc">:</span> slideAnim <span class="punc">}]</span>
+    <span class="punc">}}&gt;</span>
+      <span class="cmt">// ... hero, about, stats, programs, website</span>
+    <span class="tag-c">&lt;/Animated.View&gt;</span>
+  <span class="punc">);</span>
+<span class="punc">}</span></code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMPONENTS SECTION -->
+    <section>
+      <div class="section-eyebrow">Components</div>
+      <h2 class="section-title">Reusable Components</h2>
+      <p class="section-subtitle">5 single-responsibility components — each does one thing well.</p>
+
+      <div class="comp-grid">
+        <div class="comp-card"><div class="cc-icon">🃏</div><div class="cc-name">UniversityCard.js</div><div class="cc-desc">Full card for the list — press animation, accent bar, ranking tag, arrow button</div></div>
+        <div class="comp-card"><div class="cc-icon">🏷️</div><div class="cc-name">InfoBadge.js</div><div class="cc-desc">Stat block with icon, value, and label — used in 2×2 grid on Details screen</div></div>
+        <div class="comp-card"><div class="cc-icon">💊</div><div class="cc-name">ProgramTag.js</div><div class="cc-desc">Pill-shaped tag for each study program — wraps in a flex-wrap row</div></div>
+        <div class="comp-card"><div class="cc-icon">🔍</div><div class="cc-name">SearchBar.js</div><div class="cc-desc">Controlled text input with icon — value/onChangeText passed from parent</div></div>
+        <div class="comp-card"><div class="cc-icon">📌</div><div class="cc-name">SectionHeader.js</div><div class="cc-desc">Uppercase label + optional subtitle — reused across both screens</div></div>
+      </div>
+    </section>
+
+    <!-- FILE 11: UniversityCard -->
+    <section id="file-card">
+      <div class="section-eyebrow">File 11</div>
+      <h2 class="section-title">src/components/UniversityCard.js</h2>
+      <p class="section-subtitle">The most complex component — interactive card with spring press animation.</p>
+      <div class="file-card open">
+        <div class="file-card-header" onclick="toggleCard(this)">
+          <div class="file-card-name"><span class="file-icon">🃏</span><span class="file-path">src/components/UniversityCard.js</span><span class="file-desc">— Component</span></div>
+          <div class="file-card-meta"><span class="file-badge badge-js">JS</span><span class="toggle-icon">▼</span></div>
+        </div>
+        <div class="file-card-body">
+          <div class="explain-box">
+            <h4>Spring press animation explained</h4>
+            <p>When the user presses the card, <code>scaleAnim</code> shrinks to 0.97 with a fast spring. When they release, it bounces back to 1.0. This is wrapped in <code>Animated.View</code> with <code>transform: [{ scale: scaleAnim }]</code>. The <code>TouchableOpacity</code> handles the press detection. <code>useNativeDriver: true</code> runs the animation on the GPU thread for buttery 60fps.</p>
+            <div class="key-points">
+              <div class="key-point"><div class="dot"></div><span><strong>Props:</strong> <code>item</code> (university object) and <code>onPress</code> (callback from HomeScreen)</span></div>
+              <div class="key-point"><div class="dot"></div><span><strong>Left accent bar</strong> — 4px wide colored bar using <code>item.accentColor</code> (unique to each university)</span></div>
+              <div class="key-point"><div class="dot"></div><span><strong>numberOfLines={2}</strong> on description — truncates with ellipsis if too long</span></div>
+              <div class="key-point"><div class="dot"></div><span><strong>accessibilityLabel</strong> — screen reader reads "University of Toronto, Canada. Tap to view details."</span></div>
+            </div>
+          </div>
+          <div class="code-wrap">
+            <span class="code-lang">JS</span>
+            <pre><code><span class="kw">export default function</span> <span class="fn">UniversityCard</span><span class="punc">({</span> item<span class="punc">,</span> onPress <span class="punc">}) {</span>
+  <span class="kw">const</span> scaleAnim <span class="punc">=</span> <span class="fn">useRef</span><span class="punc">(</span><span class="kw">new</span> Animated<span class="punc">.</span><span class="fn">Value</span><span class="punc">(</span><span class="num">1</span><span class="punc">)).</span>current<span class="punc">;</span>
+
+  <span class="kw">const</span> <span class="fn">handlePressIn</span> <span class="punc">= () =&gt;</span>
+    Animated<span class="punc">.</span><span class="fn">spring</span><span class="punc">(</span>scaleAnim<span class="punc">, {</span>
+      <span class="prop">toValue</span><span class="punc">:</span> <span class="num">0.97</span><span class="punc">,</span> <span class="prop">useNativeDriver</span><span class="punc">:</span> <span class="kw">true</span><span class="punc">, </span><span class="prop">speed</span><span class="punc">:</span> <span class="num">50</span>
+    <span class="punc">}).</span><span class="fn">start</span><span class="punc">();</span>
+
+  <span class="kw">const</span> <span class="fn">handlePressOut</span> <span class="punc">= () =&gt;</span>
+    Animated<span class="punc">.</span><span class="fn">spring</span><span class="punc">(</span>scaleAnim<span class="punc">, {</span>
+      <span class="prop">toValue</span><span class="punc">:</span> <span class="num">1</span><span class="punc">,</span> <span class="prop">useNativeDriver</span><span class="punc">:</span> <span class="kw">true</span><span class="punc">, </span><span class="prop">bounciness</span><span class="punc">:</span> <span class="num">6</span>
+    <span class="punc">}).</span><span class="fn">start</span><span class="punc">();</span>
+
+  <span class="kw">return</span> <span class="punc">(</span>
+    <span class="tag-c">&lt;Animated.View</span> <span class="attr">style</span><span class="punc">={{</span> <span class="prop">transform</span><span class="punc">: [{</span> <span class="prop">scale</span><span class="punc">:</span> scaleAnim <span class="punc">}] }}&gt;</span>
+      <span class="tag-c">&lt;TouchableOpacity</span>
+        <span class="attr">onPress</span><span class="punc">={</span>onPress<span class="punc">}</span>
+        <span class="attr">onPressIn</span><span class="punc">={</span>handlePressIn<span class="punc">}</span>
+        <span class="attr">onPressOut</span><span class="punc">={</span>handlePressOut<span class="punc">}</span>
+        <span class="attr">accessibilityLabel</span><span class="punc">={</span><span class="str">`</span><span class="punc">${</span>item<span class="punc">.</span>university<span class="punc">}</span><span class="str">, </span><span class="punc">${</span>item<span class="punc">.</span>country<span class="punc">}</span><span class="str">. Tap to view details.`</span><span class="punc">}</span>
+      <span class="tag-c">&gt;</span>
+        <span class="tag-c">&lt;View</span> <span class="attr">style</span><span class="punc">={</span>styles<span class="punc">.</span>card<span class="punc">}&gt;</span>
+          <span class="cmt">// Colored accent bar on the left</span>
+          <span class="tag-c">&lt;View</span> <span class="attr">style</span><span class="punc">={[</span>styles<span class="punc">.</span>accentBar<span class="punc">, {</span> <span class="prop">backgroundColor</span><span class="punc">:</span> item<span class="punc">.</span>accentColor <span class="punc">}]}</span> <span class="tag-c">/&gt;</span>
+          <span class="cmt">// ... emoji, name, location, description, ranking tag</span>
+        <span class="tag-c">&lt;/View&gt;</span>
+      <span class="tag-c">&lt;/TouchableOpacity&gt;</span>
+    <span class="tag-c">&lt;/Animated.View&gt;</span>
+  <span class="punc">);</span>
+<span class="punc">}</span></code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FILE 12: InfoBadge -->
+    <section id="file-badge">
+      <div class="section-eyebrow">File 12</div>
+      <h2 class="section-title">src/components/InfoBadge.js</h2>
+      <p class="section-subtitle">Stat display block — icon on top, bold value, muted label below.</p>
+      <div class="file-card open">
+        <div class="file-card-header" onclick="toggleCard(this)">
+          <div class="file-card-name"><span class="file-icon">🏷️</span><span class="file-path">src/components/InfoBadge.js</span><span class="file-desc">— Component</span></div>
+          <div class="file-card-meta"><span class="file-badge badge-js">JS</span><span class="toggle-icon">▼</span></div>
+        </div>
+        <div class="file-card-body">
+          <div class="explain-box">
+            <h4>Usage on Details screen</h4>
+            <p>Rendered in a 2-column grid using <code>flex: 1</code> so each badge takes equal width. Used 4 times: Founded, Students, Acceptance Rate, Tuition.</p>
+          </div>
+          <div class="code-wrap">
+            <span class="code-lang">JS</span>
+            <pre><code><span class="cmt">// Props: icon (emoji), label (string), value (string)</span>
+<span class="kw">export default function</span> <span class="fn">InfoBadge</span><span class="punc">({</span> icon<span class="punc">,</span> label<span class="punc">,</span> value <span class="punc">}) {</span>
+  <span class="kw">return</span> <span class="punc">(</span>
+    <span class="tag-c">&lt;View</span> <span class="attr">style</span><span class="punc">={</span>styles<span class="punc">.</span>badge<span class="punc">}&gt;</span>   <span class="cmt">// flex:1 for equal width</span>
+      <span class="tag-c">&lt;Text</span> <span class="attr">style</span><span class="punc">={</span>styles<span class="punc">.</span>icon<span class="punc">}&gt;{</span>icon<span class="punc">}&lt;/</span><span class="tag-c">Text</span><span class="tag-c">&gt;</span>    <span class="cmt">// e.g. "📅"</span>
+      <span class="tag-c">&lt;Text</span> <span class="attr">style</span><span class="punc">={</span>styles<span class="punc">.</span>value<span class="punc">}&gt;{</span>value<span class="punc">}&lt;/</span><span class="tag-c">Text</span><span class="tag-c">&gt;</span>  <span class="cmt">// e.g. "1827"</span>
+      <span class="tag-c">&lt;Text</span> <span class="attr">style</span><span class="punc">={</span>styles<span class="punc">.</span>label<span class="punc">}&gt;{</span>label<span class="punc">}&lt;/</span><span class="tag-c">Text</span><span class="tag-c">&gt;</span>  <span class="cmt">// e.g. "Founded"</span>
+    <span class="tag-c">&lt;/View&gt;</span>
+  <span class="punc">);</span>
+<span class="punc">}</span>
+
+<span class="cmt">// Example usage:</span>
+<span class="tag-c">&lt;InfoBadge</span> <span class="attr">icon</span><span class="punc">=</span><span class="str">"📅"</span> <span class="attr">label</span><span class="punc">=</span><span class="str">"Founded"</span> <span class="attr">value</span><span class="punc">={</span>university<span class="punc">.</span>founded<span class="punc">}</span> <span class="tag-c">/&gt;</span>
+<span class="tag-c">&lt;InfoBadge</span> <span class="attr">icon</span><span class="punc">=</span><span class="str">"👩‍🎓"</span> <span class="attr">label</span><span class="punc">=</span><span class="str">"Students"</span> <span class="attr">value</span><span class="punc">={</span>university<span class="punc">.</span>students<span class="punc">}</span> <span class="tag-c">/&gt;</span></code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FILE 13: ProgramTag -->
+    <section id="file-tag">
+      <div class="section-eyebrow">File 13</div>
+      <h2 class="section-title">src/components/ProgramTag.js</h2>
+      <p class="section-subtitle">Pill-shaped tag for each study program — displayed in a wrapping flex row.</p>
+      <div class="file-card open">
+        <div class="file-card-header" onclick="toggleCard(this)">
+          <div class="file-card-name"><span class="file-icon">💊</span><span class="file-path">src/components/ProgramTag.js</span><span class="file-desc">— Component</span></div>
+          <div class="file-card-meta"><span class="file-badge badge-js">JS</span><span class="toggle-icon">▼</span></div>
+        </div>
+        <div class="file-card-body">
+          <div class="explain-box">
+            <h4>How it renders</h4>
+            <p>The parent container uses <code>flexWrap: "wrap"</code> so tags flow to the next line automatically when they run out of space. Each tag uses <code>alignSelf: "flex-start"</code> so it only takes the width of its text content.</p>
+          </div>
+          <div class="code-wrap">
+            <span class="code-lang">JS</span>
+            <pre><code><span class="cmt">// Props: label (string)</span>
+<span class="kw">export default function</span> <span class="fn">ProgramTag</span><span class="punc">({</span> label <span class="punc">}) {</span>
+  <span class="kw">return</span> <span class="punc">(</span>
+    <span class="tag-c">&lt;View</span> <span class="attr">style</span><span class="punc">={</span>styles<span class="punc">.</span>tag<span class="punc">}&gt;</span>
+      <span class="tag-c">&lt;Text</span> <span class="attr">style</span><span class="punc">={</span>styles<span class="punc">.</span>label<span class="punc">}&gt;{</span>label<span class="punc">}&lt;/</span><span class="tag-c">Text</span><span class="tag-c">&gt;</span>
+    <span class="tag-c">&lt;/View&gt;</span>
+  <span class="punc">);</span>
+<span class="punc">}</span>
+
+<span class="cmt">// Parent renders with map:</span>
+<span class="tag-c">&lt;View</span> <span class="attr">style</span><span class="punc">={{</span> <span class="prop">flexDirection</span><span class="punc">:</span> <span class="str">"row"</span><span class="punc">,</span> <span class="prop">flexWrap</span><span class="punc">:</span> <span class="str">"wrap"</span><span class="punc">,</span> <span class="prop">gap</span><span class="punc">:</span> <span class="num">8</span> <span class="punc">}}&gt;</span>
+  <span class="punc">{</span>university<span class="punc">.</span>programs<span class="punc">.</span><span class="fn">map</span><span class="punc">((</span>prog<span class="punc">,</span> idx<span class="punc">) =&gt;</span>
+    <span class="tag-c">&lt;ProgramTag</span> <span class="attr">key</span><span class="punc">={</span>idx<span class="punc">}</span> <span class="attr">label</span><span class="punc">={</span>prog<span class="punc">}</span> <span class="tag-c">/&gt;</span>
+  <span class="punc">)}</span>
+<span class="tag-c">&lt;/View&gt;</span></code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FILE 14: SearchBar -->
+    <section id="file-search">
+      <div class="section-eyebrow">File 14</div>
+      <h2 class="section-title">src/components/SearchBar.js</h2>
+      <p class="section-subtitle">Controlled text input — value and onChange live in the parent (HomeScreen).</p>
+      <div class="file-card open">
+        <div class="file-card-header" onclick="toggleCard(this)">
+          <div class="file-card-name"><span class="file-icon">🔍</span><span class="file-path">src/components/SearchBar.js</span><span class="file-desc">— Component</span></div>
+          <div class="file-card-meta"><span class="file-badge badge-js">JS</span><span class="toggle-icon">▼</span></div>
+        </div>
+        <div class="file-card-body">
+          <div class="explain-box">
+            <h4>Controlled vs uncontrolled inputs</h4>
+            <p>This is a <strong>controlled component</strong> — its <code>value</code> is driven by parent state (<code>searchQuery</code> in HomeScreen). Every keystroke triggers <code>onChangeText</code>, which updates state, which re-renders and passes the new value back. This pattern lets the parent filter the list in real time.</p>
+            <div class="key-points">
+              <div class="key-point"><div class="dot"></div><span><code>clearButtonMode="while-editing"</code> — shows iOS clear (×) button when text is present</span></div>
+              <div class="key-point"><div class="dot"></div><span><code>returnKeyType="search"</code> — shows "Search" button on keyboard instead of "Return"</span></div>
+              <div class="key-point"><div class="dot"></div><span><code>accessibilityRole="search"</code> — tells screen readers this is a search field</span></div>
+            </div>
+          </div>
+          <div class="code-wrap">
+            <span class="code-lang">JS</span>
+            <pre><code><span class="cmt">// Props: value, onChangeText, placeholder</span>
+<span class="kw">export default function</span> <span class="fn">SearchBar</span><span class="punc">({</span> value<span class="punc">,</span> onChangeText<span class="punc">,</span> placeholder <span class="punc">}) {</span>
+  <span class="kw">return</span> <span class="punc">(</span>
+    <span class="tag-c">&lt;View</span> <span class="attr">style</span><span class="punc">={</span>styles<span class="punc">.</span>container<span class="punc">}&gt;</span>
+      <span class="tag-c">&lt;Text</span> <span class="attr">style</span><span class="punc">={</span>styles<span class="punc">.</span>icon<span class="punc">}&gt;</span>🔍<span class="tag-c">&lt;/Text&gt;</span>
+      <span class="tag-c">&lt;TextInput</span>
+        <span class="attr">value</span><span class="punc">={</span>value<span class="punc">}</span>                          <span class="cmt">// controlled</span>
+        <span class="attr">onChangeText</span><span class="punc">={</span>onChangeText<span class="punc">}</span>            <span class="cmt">// parent setState</span>
+        <span class="attr">placeholder</span><span class="punc">={</span>placeholder<span class="punc">}</span>
+        <span class="attr">placeholderTextColor</span><span class="punc">={</span>Colors<span class="punc">.</span>textMuted<span class="punc">}</span>
+        <span class="attr">returnKeyType</span><span class="punc">=</span><span class="str">"search"</span>
+        <span class="attr">clearButtonMode</span><span class="punc">=</span><span class="str">"while-editing"</span>
+        <span class="attr">accessibilityRole</span><span class="punc">=</span><span class="str">"search"</span>
+      <span class="tag-c">/&gt;</span>
+    <span class="tag-c">&lt;/View&gt;</span>
+  <span class="punc">);</span>
+<span class="punc">}</span></code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FILE 15: SectionHeader -->
+    <section id="file-sec">
+      <div class="section-eyebrow">File 15</div>
+      <h2 class="section-title">src/components/SectionHeader.js</h2>
+      <p class="section-subtitle">Simple uppercase label used to title sections on both screens.</p>
+      <div class="file-card open">
+        <div class="file-card-header" onclick="toggleCard(this)">
+          <div class="file-card-name"><span class="file-icon">📌</span><span class="file-path">src/components/SectionHeader.js</span><span class="file-desc">— Component</span></div>
+          <div class="file-card-meta"><span class="file-badge badge-js">JS</span><span class="toggle-icon">▼</span></div>
+        </div>
+        <div class="file-card-body">
+          <div class="explain-box">
+            <h4>Why a component for just a label?</h4>
+            <p>Consistency. If the section label style needs to change (font size, color, spacing), you change it in one file and it updates everywhere it's used — About, Key Stats, Popular Programs.</p>
+          </div>
+          <div class="code-wrap">
+            <span class="code-lang">JS</span>
+            <pre><code><span class="cmt">// Props: title (required), subtitle (optional)</span>
+<span class="kw">export default function</span> <span class="fn">SectionHeader</span><span class="punc">({</span> title<span class="punc">,</span> subtitle <span class="punc">}) {</span>
+  <span class="kw">return</span> <span class="punc">(</span>
+    <span class="tag-c">&lt;View</span> <span class="attr">style</span><span class="punc">={</span>styles<span class="punc">.</span>container<span class="punc">}&gt;</span>
+      <span class="tag-c">&lt;Text</span> <span class="attr">style</span><span class="punc">={</span>styles<span class="punc">.</span>title<span class="punc">}&gt;{</span>title<span class="punc">}&lt;/</span><span class="tag-c">Text</span><span class="tag-c">&gt;</span>
+      <span class="punc">{</span>subtitle <span class="punc">?</span> <span class="tag-c">&lt;Text</span> <span class="attr">style</span><span class="punc">={</span>styles<span class="punc">.</span>subtitle<span class="punc">}&gt;{</span>subtitle<span class="punc">}&lt;/</span><span class="tag-c">Text</span><span class="tag-c">&gt;</span> <span class="punc">:</span> <span class="kw">null</span><span class="punc">}</span>
+    <span class="tag-c">&lt;/View&gt;</span>
+  <span class="punc">);</span>
+<span class="punc">}</span>
+
+<span class="cmt">// Example usages:</span>
+<span class="tag-c">&lt;SectionHeader</span> <span class="attr">title</span><span class="punc">=</span><span class="str">"About"</span> <span class="tag-c">/&gt;</span>
+<span class="tag-c">&lt;SectionHeader</span> <span class="attr">title</span><span class="punc">=</span><span class="str">"Key Stats"</span> <span class="tag-c">/&gt;</span>
+<span class="tag-c">&lt;SectionHeader</span> <span class="attr">title</span><span class="punc">=</span><span class="str">"Popular Programs"</span> <span class="tag-c">/&gt;</span></code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DATA FLOW SUMMARY -->
+    <section>
+      <div class="section-eyebrow">Architecture Summary</div>
+      <h2 class="section-title">Data Flow Diagram</h2>
+      <p class="section-subtitle">How data and navigation events move through the app.</p>
+
+      <div class="flow">
+        <div class="flow-item"><div class="fi-icon">🗃️</div><div class="fi-label">universities.js</div><div class="fi-sub">static array</div></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-item"><div class="fi-icon">📋</div><div class="fi-label">HomeScreen</div><div class="fi-sub">filters + renders</div></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-item"><div class="fi-icon">🃏</div><div class="fi-label">UniversityCard</div><div class="fi-sub">item prop</div></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-item"><div class="fi-icon">👆</div><div class="fi-label">User Tap</div><div class="fi-sub">onPress</div></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-item"><div class="fi-icon">🧭</div><div class="fi-label">Navigator</div><div class="fi-sub">navigate()</div></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-item"><div class="fi-icon">🔍</div><div class="fi-label">DetailsScreen</div><div class="fi-sub">route.params</div></div>
+      </div>
+
+      <div class="highlight-box green" style="margin-top:16px;">
+        <strong>Theme flow:</strong> <code>theme/index.js</code> exports tokens → imported by all components and screens → used in <code>StyleSheet.create()</code> calls → consistent design everywhere.
+      </div>
+      <div class="highlight-box" style="margin-top:12px;">
+        <strong>Responsive flow:</strong> <code>useWindowDimensions()</code> in <code>useResponsive.js</code> → returns flags like <code>isTablet</code> → consumed by screens to adjust <code>paddingHorizontal</code>, font sizes, and column counts dynamically.
+      </div>
+    </section>
+
+    <footer>
+      <p>UniExplorer · React Native + Expo · Full Project Documentation</p>
+      <p style="margin-top:8px;">17 files · 5 components · 2 screens · 8 universities</p>
+    </footer>
+
+  </main>
+</div>
+
+<script>
+  function toggleCard(header) {
+    const card = header.closest('.file-card');
+    card.classList.toggle('open');
+  }
+
+  // Sidebar active link on scroll
+  const sections = document.querySelectorAll('section[id], div[id]');
+  const navItems = document.querySelectorAll('.nav-item');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navItems.forEach(item => item.classList.remove('active'));
+        const link = document.querySelector(`.nav-item[href="#${entry.target.id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { threshold: 0.3 });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
